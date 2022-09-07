@@ -6,3 +6,6 @@ spring:
       enable: true
       uri: http://localhost:8888
 eureka.instance.prefer-ip-address=true: true
+eureka:
+  instance:
+    hostname: localhost
