@@ -5,3 +5,4 @@ spring:
     config:
       enable: true
       uri: http://localhost:8888
+eureka.instance.prefer-ip-address=true: true

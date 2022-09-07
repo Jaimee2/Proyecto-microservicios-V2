@@ -9,7 +9,9 @@ import usuarioservice.usuarioservice.modelos.Moto;
 
 import java.util.List;
 
-@FeignClient(name = "motos-service" , url = "http://localhost:8083", path = "/motos")
+//@FeignClient(name = "moto-service" , url = "http://moto-service", path = "/motos")
+//Eureka:
+@FeignClient(name = "moto-service" ,path = "/motos")
 public interface MotosFeingClient {
 
     @PostMapping

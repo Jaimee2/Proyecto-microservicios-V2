@@ -61,9 +61,9 @@ public class UsuarioController {
     }
 
     @RequestMapping("/motos/{usuarioId}")
-    public ResponseEntity<List<Coche>> getMotosByUsuarioId(@PathVariable("usuarioId") int id){
+    public ResponseEntity<List<Moto>> getMotosByUsuarioId(@PathVariable("usuarioId") int id){
 
-        List<Coche> listaMotos = usuarioService.getMotosByUsuarioId(id);
+        List<Moto> listaMotos = usuarioService.getMotosByUsuarioId(id);
 
         if (listaMotos == null) {
             return ResponseEntity.notFound().build();

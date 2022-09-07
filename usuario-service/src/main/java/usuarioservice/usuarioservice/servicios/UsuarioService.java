@@ -45,15 +45,19 @@ public class UsuarioService {
 
     //Devolvemos una lista de coches que depende del id del usuario
     public List<Coche> getCochesByUsuarioId(int usuarioId){
-        //Query al servicio coches                          //Esto se tendrá que cambiar con heroku
-        List<Coche> listaCoches = restTemplate.getForObject("http://localhost:8082/coche/usuario/"+usuarioId,List.class);
+        //Query al servicio coches
+        //List<Coche> listaCoches = restTemplate.getForObject("http://localhost:8082/coche/usuario/"+usuarioId,List.class);**/
+
+        List<Coche> listaCoches = restTemplate.getForObject("http://coches-service/coche/usuario/"+usuarioId,List.class);
+
         return listaCoches;
     }
 
     //Devolvemos una lista de motos que depende del id del usuario
-    public List<Coche> getMotosByUsuarioId(int usuarioId){
-        //Query al servicio coches                          //Esto se tendrá que cambiar con heroku
-        List<Coche> listaMotos = restTemplate.getForObject("http://localhost:8083/motos/usuario/"+usuarioId,List.class);
+    public List<Moto> getMotosByUsuarioId(int usuarioId){
+        //Query al servicio motos                          //Esto se tendrá que cambiar con heroku
+        //List<Moto> listaMotos = restTemplate.getForObject("http://localhost:8083/motos/usuario/"+usuarioId,List.class);
+        List<Moto> listaMotos = restTemplate.getForObject("http://moto-service/motos/usuario/"+usuarioId,List.class);
         return listaMotos;
     }
 

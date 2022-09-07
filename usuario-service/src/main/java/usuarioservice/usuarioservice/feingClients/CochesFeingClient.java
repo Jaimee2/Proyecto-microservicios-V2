@@ -7,7 +7,9 @@ import usuarioservice.usuarioservice.modelos.Coche;
 
 import java.util.List;
 
-@FeignClient(name = "coches-service", url = "http://localhost:8082", path = "/coche")
+//@FeignClient(name = "coches-service", url = "http://coches-service", path = "/coche")
+//Eureka
+@FeignClient(name = "coches-service", path = "/coche")
 public interface CochesFeingClient {
     @PostMapping
     public Coche save(@RequestBody Coche coche);
