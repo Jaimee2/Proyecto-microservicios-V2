@@ -1,6 +1,8 @@
 package usuarioservice.usuarioservice.controladores;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import usuarioservice.usuarioservice.modelos.Coche;
@@ -8,6 +10,7 @@ import usuarioservice.usuarioservice.modelos.Moto;
 import usuarioservice.usuarioservice.modelos.Usuario;
 import usuarioservice.usuarioservice.servicios.UsuarioService;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +52,7 @@ public class UsuarioController {
     }
 
     @RequestMapping("/coches/{usuarioId}")
+    @CircuitBreaker(name = "circuitbreaker-coche", fallbackMethod = "getFallBackCoches")
     public ResponseEntity<List<Coche>> getCochesByUsuarioId(@PathVariable("usuarioId") int id){
 
         List<Coche> listaCoches = usuarioService.getCochesByUsuarioId(id);
@@ -60,7 +64,15 @@ public class UsuarioController {
         }
     }
 
+    //Si el circuito con coche está cerrado entramos aquí
+    public ResponseEntity<List<Coche>> getFallBackCoches(@PathVariable("usuarioId") int id, RuntimeException e){
+        System.out.println("Entramos en el fallBack de coches");
+        return new ResponseEntity("el usuario  " + id + " tiene el coche en el taller :(", HttpStatus.OK);
+
+    }
+
     @RequestMapping("/motos/{usuarioId}")
+    @CircuitBreaker(name = "circuitbreaker-moto", fallbackMethod = "getFallBackMotos")
     public ResponseEntity<List<Moto>> getMotosByUsuarioId(@PathVariable("usuarioId") int id){
 
         List<Moto> listaMotos = usuarioService.getMotosByUsuarioId(id);
@@ -70,6 +82,12 @@ public class UsuarioController {
         } else {
             return ResponseEntity.ok(listaMotos);
         }
+    }
+    //Si el circuito con coche está cerrado entramos aquí
+    public ResponseEntity<List<Moto>> getFallBackMotos(@PathVariable("usuarioId") int id, RuntimeException e){
+        System.out.println("Entramos en el fallBack de motos");
+        return new ResponseEntity("el usuario  " + id + " tiene la moto en el taller :(", HttpStatus.OK);
+
     }
 
     @PostMapping("/coche/{usuarioId}")
